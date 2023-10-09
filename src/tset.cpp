@@ -70,7 +70,7 @@ void TSet::DelElem(const int Elem) // исключение элемента мн
 
 TSet& TSet::operator=(const TSet& s) // присваивание
 {
-    if (this != &s) {
+    if (*this != s) {
         MaxPower = s.MaxPower;
         BitField = s.BitField;
     }
@@ -80,17 +80,18 @@ TSet& TSet::operator=(const TSet& s) // присваивание
 
 int TSet::operator==(const TSet& s) const // сравнение
 {
-    if (BitField != s.BitField) {
-        return 0;
-    }
-    else {
+    if (s.MaxPower == MaxPower && BitField == s.BitField ) {
         return 1;
+    }
+    else
+    {
+        return 0;
     }
 }
 
 int TSet::operator!=(const TSet& s) const // сравнение
 {
-    if (BitField != s.BitField) {
+    if (s.MaxPower != MaxPower || BitField != s.BitField) {
         return 1;
     }
     else {
@@ -108,20 +109,22 @@ TSet TSet::operator+(const TSet& s) // объединение
 
 TSet TSet::operator+(const int Elem) // объединение с элементом
 {
-    if ((Elem < 0) || (Elem > MaxPower)) {
+    if ((Elem < 0) || (Elem >= MaxPower)) {
         throw out_of_range("Invalid index");
     }
 
     this->InsElem(Elem);
+    return *this;
 }
 
 TSet TSet::operator-(const int Elem) // разность с элементом
 {
-    if ((Elem < 0) || (Elem > MaxPower)) {
+    if ((Elem < 0) || (Elem >= MaxPower)) {
         throw out_of_range("Invalid index");
     }
 
     this->DelElem(Elem);
+    return *this;
 }
 
 TSet TSet::operator*(const TSet& s) // пересечение

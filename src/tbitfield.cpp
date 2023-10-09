@@ -14,7 +14,7 @@ static TBitField FAKE_BITFIELD(1);
 TBitField::TBitField(int len)
 {
     if (len < 0) {
-        cout << "Negative length";
+        throw "Negative length";
         return;
     }
     else if (len == 0) {
@@ -135,6 +135,7 @@ TBitField& TBitField::operator=(const TBitField& bf) // присваивание
 
 int TBitField::operator==(const TBitField& bf) const // сравнение
 {
+
     if (BitLen != bf.BitLen || MemLen != bf.MemLen) {
         return 0;
     }
